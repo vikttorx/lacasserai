@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Season{% endblock %}
+
+{% block body %}
+    <h1>Season</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ season.id }}</td>
+            </tr>
+            <tr>
+                <th>Begin_date</th>
+                <td>{{ season.BeginDate ? season.BeginDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>End_date</th>
+                <td>{{ season.EndDate ? season.EndDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Season_name</th>
+                <td>{{ season.SeasonName }}</td>
+            </tr>
+            <tr>
+                <th>Discount</th>
+                <td>{{ season.Discount }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('season_index') }}">back to list</a>
+
+    <a href="{{ path('season_edit', {'id': season.id}) }}">edit</a>
+
+    {{ include('season/_delete_form.html.twig') }}
+{% endblock %}
