@@ -18,29 +18,39 @@
     margin-top:30px;
     width: 760px;
     padding: 10px;
-    background-color:#DDDEE3;
+    background-color:lightblue;
     box-shadow: 0px 6px 5px #888888;
 
 }
+    body{
+        background-image: url("images/pexels-photo-346529.jpeg");
+    }
 </style>
+
+<form action="{{ path('rooms_check') }}" method="post" style="float: left">
+    <input type="date" name="BeginDate">
+    <input type="date" name="EndDate">
+    <input type="submit" name="submit">
+
+</form>
 <div class="container1">
 
-        {% for e in extra %}
-    <div class="rooms">
+
+    {% for e in extra %}
+        <div class="rooms">
             {{ e.description }}
-<br>
-        {{ e.image }}
-        <a href="/reservation/new" style="float: right">Reservate</a>
-    </div>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
+            <br>
+            {{ e.image }}
+            <a href="/reservation/new" style="float: right">Reservate</a>
+        </div>
+    {% else %}
+        <tr>
+            <td colspan="4">no records found</td>
+        </tr>
 
-        {% endfor %}
+    {% endfor %}
 
 
 
-</div>
 
 {% endblock %}

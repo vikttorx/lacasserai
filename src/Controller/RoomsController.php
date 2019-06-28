@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Rooms;
 use App\Form\RoomsType;
+use App\Repository\ReservationRepository;
 use App\Repository\RoomsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,4 +94,30 @@ class RoomsController extends AbstractController
 
         return $this->redirectToRoute('rooms_index');
     }
+    /**
+     * @Route("/check", name="rooms_check", methods={"POST"})
+     */
+    public function checkDate()
+    {
+        $BeginDate = $_POST["BeginDate"];
+        $EndDate = $_POST["EndDate"];
+
+        $reservering = $this->getDoctrine()
+            ->getRepository(ReservationRepository::class)
+            ->getBetween(array($BeginDate, $EndDate));
+
+        $input = array();
+        for ($x = 0; $x < count($reservering); $x++) {
+            array_push($input, $reservering[$x][1]);
+        }
+
+        $available = $this->getDoctrine()
+            ->getRepository(RoomsRepository::class)
+            ->notIn($input);
+
+        return $this->render('room/index.html.twig', [
+            'rooms' => $available,
+        ]);
+    }
+
 }
